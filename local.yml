@@ -4,11 +4,21 @@
   connection: local
   become: yes
   tasks:
-    - name: Ejecutar update y full-upgrade
+    - name: 1. Ejecutar update y full-upgrade
       apt:
         update_cache: yes
-        upgrade: full  # Esto equivale a 'sudo apt full-upgrade -y'
+        upgrade: full
 
-    - name: Ejecutar autoremove
+    - name: 2. Ejecutar autoremove (limpieza)
       apt:
-        autoremove: yes # Esto equivale a 'sudo apt autoremove -y'
+        autoremove: yes
+
+    - name: 3. Revisar si el sistema necesita reiniciarse
+      stat:
+        path: /var/run/reboot-required
+      register: requiere_reinicio
+
+    - name: 4. Reiniciar la computadora solo si es necesario
+      reboot:
+        msg: "Mantenimiento completado. Reiniciando equipo..."
+      when: requiere_reinicio.stat.exists
