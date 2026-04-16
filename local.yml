@@ -1,14 +1,14 @@
 ---
-- name: Mantenimiento automatico de Ubuntu
+- name: Mantenimiento total de Ubuntu
   hosts: localhost
   connection: local
   become: yes
   tasks:
-    - name: 1. Actualizar repositorios e instalar actualizaciones seguras
+    - name: Ejecutar update y full-upgrade
       apt:
         update_cache: yes
-        upgrade: safe
+        upgrade: full  # Esto equivale a 'sudo apt full-upgrade -y'
 
-    - name: 2. Limpiar basura y dependencias huerfanas (autoremove)
+    - name: Ejecutar autoremove
       apt:
-        autoremove: yes
+        autoremove: yes # Esto equivale a 'sudo apt autoremove -y'
