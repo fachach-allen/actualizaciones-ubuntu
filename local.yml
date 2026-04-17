@@ -13,6 +13,7 @@
       apt:
         autoremove: yes
 
-    - name: 3. Reiniciando equipo forzosamente para confirmar tarea
-      reboot:
-        msg: "Actualización de GitHub completada. Reiniciando ahora mismo..."
+    - name: 3. Reiniciar la computadora engañando al seguro de Ansible
+      shell: sleep 2 && shutdown -r now
+      async: 1
+      poll: 0
